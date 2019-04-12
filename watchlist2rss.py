@@ -1,22 +1,21 @@
 #!/usr/bin/env python3
 
+import os
 from requests import session
 from bs4 import BeautifulSoup
 from feedgen.feed import FeedGenerator
-from configparser import ConfigParser
 import re
 match_imdb = re.compile('^http://www.imdb.com')
 
-c = ConfigParser()
-c.read('config.ini')
+def get_feed():
+    # required ENV variable: LETTERBOXD_USER
+    letterboxd_user = os.environ['LETTERBOXD_USER']
 
-
-def main():
-    feedlen = c['default'].getint('feed_length', 100)
-    watchlist_url = c['default'].get('watchlist_url', 'https://letterboxd.com/janwh/watchlist/')
-    output_file = c['default'].get('output_file', 'feed.xml')
+    feedlen = os.environ.get('FEED_LENGTH', 100)
+    watchlist_url = f'https://letterboxd.com/{letterboxd_user}/watchlist/'
+    output_file = 'feed.xml'
     base_url = 'https://letterboxd.com/'
-    page_title = 'The Dude\'s Watchlist'
+    page_title = 'Watchlist'
 
     feed = FeedGenerator()
     feed.title(page_title)
@@ -70,8 +69,8 @@ def main():
             print(movie_title)
 
     if total_movies > 0:
-        feed.rss_file(output_file)
+        return feed
 
 
 if __name__ == '__main__':
-    main()
+    get_feed(letterboxd_user).rss_file('feed.xml')
