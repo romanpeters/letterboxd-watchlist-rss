@@ -1,14 +1,16 @@
+import os
 from flask import Flask
 from flask_caching import Cache
 from watchlist2rss import get_feed
 
 cache = Cache(config={'CACHE_TYPE': 'simple'})
+cache_timeout = os.environ.get('CACHE_TIMEOUT', 900)
 
 app = Flask(__name__)
 cache.init_app(app)
 
 @app.route('/')
-@cache.cached(timeout=900)
+@cache.cached(timeout=cache_timeout)
 def letterboxd_watchlist():
     feed = get_feed()
     if not feed:
