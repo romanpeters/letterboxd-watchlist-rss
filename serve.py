@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, Response
 from flask_caching import Cache
 from watchlist2rss import get_feed
 
