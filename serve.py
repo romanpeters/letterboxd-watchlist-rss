@@ -16,7 +16,7 @@ def letterboxd_watchlist():
     if not feed:
         return "No movies found"
     else:
-        return feed.rss_str()
+        return Response(feed.rss_str(), mimetype='text/xml')
 
 if __name__ == '__main__':
     app.run(debug=False,host='0.0.0.0')
