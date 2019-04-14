@@ -4,7 +4,7 @@ convert your [Letterboxd Watchlist](https://letterboxd.com/) into an RSS feed to
 
 Example:  
 `$ docker build git@github.com:romanpeters/letterboxd-watchlist-rss.git -t letterboxd-rss`  
-`$ docker run --rm -it -e LETTERBOXD_USER=<username> -p 80:80 letterboxd-rss`
+`$ docker run --rm -it -e LETTERBOXD_USER=<username> -p 5000:5000 letterboxd-rss`
 
 Environment variables:
 - LETTERBOXD_USER: your Letterboxd username (required)

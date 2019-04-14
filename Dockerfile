@@ -1,13 +1,11 @@
 FROM python:3.7-alpine
 COPY . /app
 WORKDIR /app
+EXPOSE 5000
 
-RUN apk add --update --no-cache g++ gcc \
-        uwsgi-python3 libxslt-dev
-RUN pip install --no-cache-dir -r requirements.txt
+RUN apk add --no-cache libc-dev gcc libxslt-dev
+#RUN apk add --no-cache gccdd g++ \
+#        uwsgi-python3 python py3-beautifulsoup4 py3-lxml
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-CMD [ "uwsgi", "--socket", "0.0.0.0:80", \
-               "--uid", "uwsgi", \
-               "--plugins", "python3", \
-               "--protocol", "uwsgi", \
-               "--wsgi", "serve:application" ]
+CMD ["python", "serve.py"]
